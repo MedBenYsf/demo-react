@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './Navbar.css'
+import { Link } from 'react-router-dom'
 
 const Navbar = (props) => {
     const { title } = props;
@@ -11,9 +12,16 @@ const Navbar = (props) => {
                     <li className="nav-item active">
                         <a className="nav-link">{ title } <span className="sr-only">(current)</span></a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link">Home</a>
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/">Home</Link>
                     </li>
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/about">About</Link>
+                    </li>
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/contacts/add">Add</Link>
+                    </li>
+                   
                 </ul>
             </div>
         </nav>

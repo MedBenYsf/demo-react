@@ -28,7 +28,7 @@ class Contact extends Component {
     }
 
     render() {
-        const { id, name, tel, email } = this.props.data;
+        const { id, name, phone, email } = this.props.data;
         return (
             <Consumer>
                 { value => {
@@ -43,7 +43,7 @@ class Contact extends Component {
                                 <p className="card-text">
                                     {(this.state.showContactToggle)?
                                         (<ul className="list-group">
-                                            <li className="list-group-item">Tel: { tel }</li>
+                                            <li className="list-group-item">Phone: { phone }</li>
                                             <li className="list-group-item">Email: { email }</li>
                                         </ul>) : null
                                     }
