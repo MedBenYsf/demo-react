@@ -3,12 +3,22 @@ import { Consumer } from '../Context'
 import InputTextGroup from '../helpers/InputTextGroup'
 import axios from 'axios'
 
-class AddContact extends Component {
+class EditContact extends Component {
     state = {
         name: '',
         email: '',
         phone: '',
         errors: {}
+    }
+
+    async componentDidMount() {
+        const id = this.props.match.params.id;
+        const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
+        this.setState({
+            name: res.data.name,
+            email: res.data.email,
+            phone: res.data.phone
+        })
     }
 
     onChange = (e) => this.setState({[e.target.name]: e.target.value});
@@ -29,17 +39,18 @@ class AddContact extends Component {
             this.setState({errors: {phone: 'phoone is required'}})
             return;
         }
-        const newContact = {
+        const upContact = {
             name: name,
             email: email,
-            tel: phone
+            phone: phone
         };
 
-        axios.post('https://jsonplaceholder.typicode.com/users', newContact).then(
+        const id = this.props.match.params.id;
+
+        axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, upContact).then(
             res => {
-                console.log(res)
                 dispatch({
-                    type: 'ADD_CONTACT',
+                    type: 'UPDATE_CONTACT',
                     payload: res.data
                 });
             }
@@ -66,7 +77,7 @@ class AddContact extends Component {
                             <form onSubmit={this.submit.bind(this, dispatch, value.contacts.length)}>
                                 <div className="card">
                                     <div className="card-body">
-                                        <h4 className="card-title">Add contact</h4>
+                                        <h4 className="card-title">Edit contact</h4>
                                         <div className="card-text">
                                             <InputTextGroup 
                                                 label="Name" 
@@ -92,7 +103,7 @@ class AddContact extends Component {
                                                 error={errors.phone}
                                                 onChange={this.onChange} 
                                             />
-                                            <button className="btn btn-success btn-block">Add contact</button>
+                                            <button className="btn btn-success btn-block">Update contact</button>
                                         </div>
                                     </div>
                                 </div>
@@ -106,4 +117,4 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact;
+export default EditContact;
